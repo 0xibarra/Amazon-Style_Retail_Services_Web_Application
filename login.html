@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/jpeg" href="/styling/amazonFavicon.jpg">
+    <title>Amazon Sign-In</title>
+    <link rel="stylesheet" href="/styling/loginStyle.css">
+</head>
+<body>
+
+    <div id="error-box" class="error-box" style="display: none;">
+        <div class="error-heading">
+            <span class="error-icon">!</span>
+                <strong>There was a problem</strong>
+        </div>
+        <p>Invalid entry. Please check your information.</p>
+    </div>
+
+    <div class="container">
+        <div class="logo">
+	    <img src="/styling/amazonLogo.jpg" alt="amazon">
+	</div>
+
+        <h1>Sign In</h1>
+
+            <div class="input-group">
+    		<label for="text"><b>Enter mobile number or email</b></label>
+    		<input id="text" type="text" required>
+	    </div>
+
+	    <div class="input-group">
+    		<label for="pass"><b>Password</b></label>
+    		<input id="pass" type="password" required>
+	    </div>
+            
+	    <button class="btn" onclick="signIn()">Sign In</button>
+
+            <p id="message"></p>
+
+        <script>
+          function signIn()
+          {
+	    document.getElementById("error-box").style.display = "none";
+
+            const phoneOrEmail = document.getElementById("text").value.trim();
+
+            // Check for a valid email format
+            const isEmail = /^[A-Za-z0-9]+(?:[._-][A-Za-z0-9]+)*@[^@\s.]+\.[^@\s.]+$/.test(phoneOrEmail);
+
+            // Check for exactly 10 digits
+            const digits = phoneOrEmail.replace(/\D/g, "");
+            const isPhone = digits.length === 10 && /^\d+$/.test(phoneOrEmail.replace(/[\s().-]/g, ""));
+
+            // Reject invalid input
+            if (!isEmail && !isPhone)
+            {
+              document.getElementById("error-box").style.display = "block";
+              return;
+            }
+
+            // Clear input fields
+            document.getElementById("text").value = "";
+            document.getElementById("pass").value = "";
+
+            // Contact Flask login service
+            fetch("http://127.0.0.1:5002/login", { method: "POST" })
+            .then(response =>
+            {
+              if (response.ok)
+              {
+                window.location.href = "catalog.html";
+              }
+              else
+              {
+		document.getElementById("error-box").style.display = "block";
+	      }
+            })
+            .catch(err =>
+            {
+              document.getElementById("error-box").style.display = "block";
+              console.error(err);
+            });
+          }
+        
+        </script>
+
+        <p><a class="small-link" href="#">Forgot your password?</a></p>
+
+        <hr>
+
+        <div class="new-account">
+            <p><b>New to Amazon?</b></p>
+            <p><a class="new-small-link" href="#">Create an account</a></p>
+        </div>
+    </div>
+
+    <footer class="footer-container">
+        <div class="gray-bar"> </div>
+        <div class="bottom-label">
+            <label>FOR PROJECT/EDUCATIONAL PURPOSES ONLY</label>
+        </div>
+    </footer>	
+
+</body>
+</html>

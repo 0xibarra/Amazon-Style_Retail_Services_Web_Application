@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+
+<link rel="icon"
+      type="image/jpeg"
+      href="/styling/amazonFavicon.jpg">
+
+<title>Amazon Shopping Cart</title>
+
+<link rel="stylesheet"
+      href="/styling/cartStyle.css">
+
+</head>
+
+<body>
+
+<header class="top-nav">
+
+    <div class="logo-container" onclick="window.location.href='catalog.html'">
+
+        <img src="/styling/amazonPrime.png" alt="Amazon">
+
+    </div>
+
+    <div class="deliver-box">
+
+        <span>Deliver to CYBI-3345</span>
+
+        <strong>
+            📍 UTRGV 78520
+        </strong>
+
+    </div>
+
+    <div class="search-container">
+
+        <select>
+            <option>All</option>
+        </select>
+
+        <input type="text" placeholder="Search Amazon">
+
+        <button class="search-btn">
+
+            <img src="/styling/magnifyingGlass.png" alt="Search">
+
+        </button>
+
+    </div>
+
+    <div class="language-select">
+
+        <img src="/styling/usFlag.png" alt="US">
+
+        <span class="dropdown-trigger1">EN</span>
+        <span class="dropdown-trigger2"> ▼</span>
+
+        <div class="language-menu">
+
+            <div class="menu-title">
+                Change language
+            </div>
+
+            <hr>
+
+            <label>
+
+                <input type="radio" name="lang" value="EN" checked>
+                English - EN
+
+            </label>
+
+            <label>
+
+                <input type="radio" name="lang" value="ES">
+                Español - ES
+
+            </label>
+
+            <hr>
+
+            <div class="country-text">
+
+                🇺🇸 You are shopping on Amazon.com
+
+            </div>
+
+            <div class="change-country">
+
+                Change country/region
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="nav-right">
+
+        <div class="nav-item login" onclick="window.location.href='login.html'">
+
+            <span>Hello, CYBI-3345</span>
+
+            <strong>Account & Lists</strong>
+
+        </div>
+
+        <div class="nav-item">
+
+            <span>Returns</span>
+
+            <strong>& Orders</strong>
+
+        </div>
+
+        <div class="nav-item cart" onclick="window.location.href='cart.html'">
+
+            <div class="cart-left">
+
+                <span id="cartCount">
+                    0
+                </span>
+
+                <span class="cart-icon">
+
+                    <img src="/styling/amazonCart.png" alt="Cart">
+
+                </span>
+
+            </div>
+
+            <div class="cart-right">
+
+                Cart
+
+            </div>
+
+        </div>
+
+</header>
+
+<nav class="sub-nav">
+
+    <span class="all-link">
+
+        ☰ All
+
+    </span>
+
+    <span class="center-banner">
+
+        FOR PROJECT / EDUCATIONAL PURPOSES ONLY
+
+    </span>
+
+</nav>
+
+<div class="cart-page">
+
+    <div class="cart-left-panel">
+
+        <h1>Shopping Cart</h1>
+
+        <div id="removedMessage"></div>
+
+        <div id="cartItems"></div>
+
+    </div>
+
+    <div class="cart-right-panel">
+
+        <div class="summary-box">
+
+            <h2>Order Summary</h2>
+
+            <div id="itemCount"></div>
+
+            <div id="subtotal"></div>
+
+            <div id="tax"></div>
+
+            <div id="total"></div>
+
+            <button>
+
+                Proceed to Checkout
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+const products =
+{
+"Amazon Echo Show 11 (newest model), Vibrant Full-HD 11\", Graphite":
+{
+price:249.99,
+image:"/styling/amazonEchoShow11.png"
+},
+
+"Bounty Paper Towels Quick Size, White, 16 Family Rolls = 40 Regular Rolls":
+{
+price:43.49,
+image:"/styling/bountyPaperTowels.png"
+},
+
+"American Silver Eagle 1 oz Bullion Coin with Certificate of Authenticity $1":
+{
+price:84.99,
+image:"/styling/silverDollar.png"
+},
+
+"Owala FreeSip Stainless Steel Water Bottle 24 oz Very, Very Dark":
+{
+price:29.97,
+image:"/styling/owalaWaterBottle.png"
+},
+
+"Mighty Patch Hero Cosmetics Original Nighttime Acne Pimple Patches, 36 Ct":
+{
+price:11.97,
+image:"/styling/mightyPatch.png"
+}
+};
+
+function removeOne(item)
+{
+    fetch(
+        "http://127.0.0.1:5003/remove",
+        {
+            method:"POST",
+            headers:
+            {
+                "Content-Type":
+                "application/x-www-form-urlencoded"
+            },
+            body:
+                "item=" +
+                encodeURIComponent(item)
+        }
+    )
+    .then(() => loadCart());
+}
+
+function addOne(item)
+{
+    fetch(
+        "http://127.0.0.1:5003/add",
+        {
+            method:"POST",
+            headers:
+            {
+                "Content-Type":
+                "application/x-www-form-urlencoded"
+            },
+            body:
+                "item=" +
+                encodeURIComponent(item)
+        }
+    )
+    .then(() => loadCart());
+}
+
+function deleteItem(item)
+{
+    fetch(
+        "http://127.0.0.1:5003/delete",
+        {
+            method:"POST",
+            headers:
+            {
+                "Content-Type":
+                "application/x-www-form-urlencoded"
+            },
+            body:
+                "item=" +
+                encodeURIComponent(item)
+        }
+    )
+    .then(() =>
+    {
+        document.getElementById(
+            "removedMessage"
+        ).innerHTML =
+        `${item} was removed from Shopping Cart.`;
+
+        loadCart();
+    });
+}
+
+function loadCart()
+{
+fetch("http://127.0.0.1:5003/cart")
+.then(r=>r.json())
+.then(items =>
+{
+    const grouped = {};
+
+    items.forEach(item =>
+    {
+        grouped[item] =
+            (grouped[item] || 0) + 1;
+    });
+
+    let html = "";
+
+    let subtotal = 0;
+
+    Object.keys(grouped).forEach(item =>
+    {
+        const qty =
+            grouped[item];
+
+	const safeItem = item.replace(/"/g, "&quot;");
+
+        const price =
+            products[item].price;
+
+        subtotal +=
+            price * qty;
+
+        const image =
+            products[item].image;
+
+        const leftButton =
+        qty === 1
+        ?
+        `<img
+            class="trash-icon"
+            src="/styling/deleteIcon.png"
+            onclick="deleteItem('${safeItem}')">`
+        :
+        `<span
+            onclick="removeOne('${safeItem}')">
+            −
+         </span>`;
+
+        html +=
+        `
+        <div class="cart-item">
+
+            <div class="item-image">
+
+                <img src="${image}">
+
+            </div>
+
+            <div class="item-middle">
+
+                <div class="item-name">
+
+                    ${item}
+
+                </div>
+
+                <div class="stock">
+
+                    In Stock
+
+                </div>
+
+                <div class="returns">
+
+                    FREE Returns
+
+                </div>
+
+                <div class="quantity-section">
+
+                    <div class="qty-control">
+
+                        ${leftButton}
+
+                        <span>
+
+                            ${qty}
+
+                        </span>
+
+                        <span
+                            onclick="addOne('${safeItem}')">
+
+                            +
+
+                        </span>
+
+                    </div>
+
+                    <a href="#"
+                       onclick="deleteItem('${safeItem}')">
+
+                       Delete
+
+                    </a>
+
+                    <a href="#">
+
+                        Save for later
+
+                    </a>
+
+                    <a href="#">
+
+                        Compare with similar items
+
+                    </a>
+
+                    <a href="#">
+
+                        Share
+
+                    </a>
+
+                </div>
+
+            </div>
+
+            <div class="item-price">
+
+                $${price.toFixed(2)}
+
+            </div>
+
+        </div>
+        `;
+    });
+
+    if(html==="")
+    {
+        html =
+        `
+        <p class="empty-cart">
+
+            Your Amazon Cart is empty.
+
+        </p>
+        `;
+    }
+
+    document
+        .getElementById(
+            "cartItems"
+        )
+        .innerHTML = html;
+
+    const tax =
+        subtotal * 0.0825;
+
+    const total =
+        subtotal + tax;
+
+    document
+        .getElementById(
+            "itemCount"
+        )
+        .innerHTML =
+        `(${items.length} item${items.length===1?'':'s'})`;
+
+    document
+        .getElementById(
+            "subtotal"
+        )
+        .innerHTML =
+        `Subtotal: $${subtotal.toFixed(2)}`;
+
+    document
+        .getElementById(
+            "tax"
+        )
+        .innerHTML =
+        `Tax: $${tax.toFixed(2)}`;
+
+    document
+        .getElementById(
+            "total"
+        )
+        .innerHTML =
+        `Total: $${total.toFixed(2)}`;
+});
+}
+
+loadCart();
+
+</script>
+
+</body>
+</html>

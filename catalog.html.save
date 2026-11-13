@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/jpeg" href="/styling/amazonFavicon.jpg">
+    <title>Amazon.com. Spend less. Smile more.</title>
+    <link rel="stylesheet" href="/styling/catalogStyle.css">
+
+</head>
+
+<body>
+
+<header class="top-nav">
+
+    <div class="logo-container">
+
+        <img src="/styling/amazonLogo.jpg" alt="Amazon">
+
+    </div>
+
+    <div class="search-container">
+
+        <select>
+            <option>All</option>
+        </select>
+
+        <input type="text" placeholder="Search Amazon">
+
+        <button class="search-btn">
+
+            <img src="/styling/magnifyingGlass.png" alt="Search">
+
+        </button>
+
+    </div>
+
+    <div class="nav-right">
+
+        <div class="nav-item">
+
+            <span>Hello, Isaac</span>
+
+            <strong>Account & Lists</strong>
+
+        </div>
+
+        <div class="nav-item">
+
+            <span>Returns</span>
+
+            <strong>& Orders</strong>
+
+        </div>
+
+        <div class="nav-item cart" onclick="window.location.href='cart.html'">
+
+            <span id="cartCount">0</span>
+
+            🛒 Cart
+
+        </div>
+
+    </div>
+
+</header>
+
+<nav class="sub-nav">
+
+    <span><b>☰ All</b></span>
+    <span><b>FOR PROJECT/EDUCATIONAL PURPOSES ONLY</b></span>
+
+</nav>
+
+<section class="category-grid">
+
+    <div class="category-card">
+
+        <h2>Amazon Devices</h2>
+
+        <img src="https://m.media-amazon.com/images/I/61L1ItFgFHL.jpg">
+
+    </div>
+
+    <div class="category-card">
+
+        <h2>Home Essentials</h2>
+
+        <img src="https://m.media-amazon.com/images/I/81iG4wM2f6L.jpg">
+
+    </div>
+
+    <div class="category-card">
+
+        <h2>Collectibles</h2>
+
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/US_Silver_Dollar.jpg/640px-US_Silver_Dollar.jpg">
+
+    </div>
+
+    <div class="category-card">
+
+        <h2>Electronics</h2>
+
+        <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=900">
+
+    </div>
+
+    <div class="category-card">
+
+        <h2>Daily Deals</h2>
+
+        <img src="https://images.unsplash.com/photo-1607082349566-187342175e2f?w=900">
+
+    </div>
+
+</section>
+
+<section class="recommendation-row">
+
+    <div class="product-card">
+
+        <img src="https://m.media-amazon.com/images/I/61L1ItFgFHL.jpg">
+
+        <h3>Echo Show</h3>
+
+        <div class="price">$149.99</div>
+
+        <button onclick="addToCart('Echo Show')">
+
+            Add To Cart
+
+        </button>
+
+    </div>
+
+    <div class="product-card">
+
+        <img src="https://m.media-amazon.com/images/I/81iG4wM2f6L.jpg">
+
+        <h3>Bounty Paper Towels</h3>
+
+        <div class="price">$24.99</div>
+
+        <button onclick="addToCart('Bounty Paper Towels')">
+
+            Add To Cart
+
+        </button>
+
+    </div>
+
+    <div class="product-card">
+
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/US_Silver_Dollar.jpg/640px-US_Silver_Dollar.jpg">
+
+        <h3>Silver Coin</h3>
+
+        <div class="price">$39.99</div>
+
+        <button onclick="addToCart('Silver Coin')">
+
+            Add To Cart
+
+        </button>
+
+    </div>
+
+    <div class="product-card">
+
+        <img src="https://m.media-amazon.com/images/I/61EXU8BuGZL.jpg">
+
+        <h3>Echo Dot</h3>
+
+        <div class="price">$49.99</div>
+
+        <button onclick="addToCart('Echo Dot')">
+
+            Add To Cart
+
+        </button>
+
+    </div>
+
+    <div class="product-card">
+
+        <img src="https://m.media-amazon.com/images/I/51TjJOTfslL.jpg">
+
+        <h3>Fire TV Stick</h3>
+
+        <div class="price">$39.99</div>
+
+        <button onclick="addToCart('Fire TV Stick')">
+
+            Add To Cart
+
+        </button>
+
+    </div>
+
+</section>
+
+<script>
+
+let cartCount =
+    Number(localStorage.getItem("cartCount")) || 0;
+
+document.getElementById("cartCount")
+    .innerText = cartCount;
+
+function addToCart(item)
+{
+    cartCount++;
+
+    localStorage.setItem(
+        "cartCount",
+        cartCount
+    );
+
+    document.getElementById("cartCount")
+        .innerText = cartCount;
+
+    fetch(
+        "http://127.0.0.1:5003/cart",
+        {
+            method:"POST"
+        }
+    );
+}
+
+</script>
+
+</body>
+</html>
+
+
+    <div class="category-card">
+
+        <h2>Home Essentials</h2>
+
+        <img src="https://m.media-amazon.com/images/I/81iG4wM2f6L.jpg">
+
+    </div>
+
+    <div class="category-card">
+
+        <h2>Collectibles</h2>
+
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/US_Silver_Dollar.jpg/640px-US_Silver_Dollar.jpg">
+
+    </div>
+

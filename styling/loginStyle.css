@@ -1,0 +1,163 @@
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    padding-top: 50px;
+    flex-direction: column;
+    align-items: center;
+}
+
+.error-box {
+    background-color: #fff;
+    border: 1px solid #c40000;
+    border-radius: 5px;
+    padding: 12px;
+    margin-bottom: 15px;
+    width: 400px;
+    color: #000000;
+    box-sizing: border-box;
+}
+
+.error-heading {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.error-heading strong {
+    font-size: 20px;
+}
+
+.error-icon {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 25px;
+    height: 25px;
+    background-color: #c40000;
+    color: white;
+    border-radius: 50%;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.error-box p {
+    font-size: 16px;
+    margin: 5px 0 0 0;
+}
+
+.container {
+    background: white;
+    width: 350px;
+    padding: 25px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.logo {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.logo img {
+    width: auto;
+    height: 100px;
+}
+
+h1 {
+    font-size: 24px;
+    font-weight: normal;
+    margin-top: 0px;
+    margin-bottom: 15px;
+}
+
+.input-group {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.input-group input {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #a6a6a6;
+    border-radius: 3px;
+}
+
+.btn {
+    width: 100%;
+    background-color: #f0c14b;
+    border: 1px solid #a88734;
+    padding: 8px;
+    border-radius: 999px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #e2b33c;
+}
+
+.small-link {
+    font-size: 13px;
+    color: #0066c0;
+    text-decoration: none;
+}
+
+.small-link:hover {
+    text-decoration: underline;
+}
+
+.new-account p:first-child {
+    margin-top: 20px;
+    margin-bottom: 8px;
+    text-align: left;
+}
+
+.new-account p:last-child {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.new-small-link {
+    font-size: 13px;
+    color: #0066c0;
+    text-decoration: none;
+}
+ 
+.new-small-link:hover {
+    text-decoration: underline;
+}
+
+.footer-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.gray-bar {
+    width: 95%;
+    height: 3px;
+    background-color: #d6dada;
+    
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.footer-container label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    font-size: 14px;
+    color: #565959;
+    margin: 0;
+}
